@@ -1,4 +1,4 @@
-import connectDB from "../utils/connectDB.js";
+import { getDB } from "../utils/connectDB.js";
 import QueryBuilderError from "../error/QueryBuilderError.ts";
 
 type NodeIdentifier = {
@@ -456,12 +456,7 @@ RETURN size(relationships) AS affected
 
   async execute() {
     const query = this.build();
-    const db = connectDB();
-
-    try {
-      return await db.query(query.cypher, query.params);
-    } finally {
-      await db.close();
-    }
+    const db = getDB();
+    return await db.query(query.cypher, query.params);
   }
 }

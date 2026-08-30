@@ -1,13 +1,43 @@
-import { Driver, auth, driver } from "neo4j-driver";
+import { Driver, auth, driver as createDriver } from "neo4j-driver";
+import QueryBuilderError from "./error/QueryBuilderError.ts";
+
+
+export interface DatabaseConfig {
+  uri:string;
+  password:string;
+  username:string
+}
 
 export class Database {
   private driver: Driver;
+  private connected = false;
 
-  constructor(uri: string, password: string, username: string) {
-    this.driver = driver(uri, auth.basic(username, password));
+  constructor(config:DatabaseConfig) {
+    if(!config.password || !config.uri ||!config.username){
+       throw new QueryBuilderError( "Database requires uri, username, and password to connect.")
+    }
+    this.driver = createDriver(config.uri, auth.basic(config.username, config.password));
   }
 
+  async connect(){
+    try{
+       await this.driver.verifyConnectivity();
+      this.connected = true;
+
+    }catch(error){
+      throw new QueryBuilderError(`Failed to connect to the database: ${(error as Error).message}`,)
+    }
+  }
+
+   private ensureConnected() {
+    if (!this.connected) {
+      throw new QueryBuilderError(
+        "Database is not connected. Call connect() before running queries.",
+      );
+    }
+  }
   session() {
+    this.ensureConnected()
     return this.driver.session();
   }
 
@@ -16,6 +46,7 @@ export class Database {
   }
 
   async query(cypher: string, params: Record<string, unknown>) {
+    this.ensureConnected();
     const session = this.session();
 
     try {

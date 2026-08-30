@@ -1,24 +1,44 @@
 {
   "name": "cypherorm",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "npx prettier . --write"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "version": "0.1.0",
+  "description": "A lightweight, TypeScript-first ORM for graph databases that speak Cypher \u2014 Neo4j, CognoDB, and other Bolt-compatible graph databases.",
   "type": "module",
-  "dependencies": {
-    "dotenv": "^17.4.2",
-    "neo4j-driver": "^6.2.0"
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "format": "npx prettier . --write",
+    "test": "vitest"
+  },
+  "keywords": [
+    "cypher",
+    "neo4j",
+    "graph-database",
+    "orm",
+    "typescript",
+    "cognodb"
+  ],
+  "author": "Courage Nduka",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Couragenwanduka/CypherORM"
+  },
+  "peerDependencies": {
+    "neo4j-driver": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.4.0",
+    "dotenv": "^8.2.0",
+    "neo4j-driver": "^6.2.0",
+    "node-fetch": "^3.3.2",
     "prettier": "3.9.6",
     "tsx": "^4.23.12",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
   }
 }
