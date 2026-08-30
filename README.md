@@ -3,13 +3,13 @@
 A lightweight, TypeScript-first ORM for graph databases that speak Cypher — Neo4j, CognoDB, and other Bolt-compatible graph databases.
 
 ```typescript
-const User = model('User', {
+const User = model("User", {
   name: String,
   email: String,
 });
 
-const user = await User.create({ name: 'Ada', email: 'ada@example.com' });
-const found = await User.find({ name: 'Ada' });
+const user = await User.create({ name: "Ada", email: "ada@example.com" });
+const found = await User.find({ name: "Ada" });
 ```
 
 No raw Cypher strings. No manual driver boilerplate. Just define a model and go.
@@ -24,14 +24,14 @@ The tooling gap is real: relational databases have Prisma and Mongoose. Graph da
 
 🚧 **Early / actively in development** — not production-ready yet.
 
-| Feature | Status |
-|---|---|
-| `create` | ✅ Done |
-| `find` | ✅ Done |
-| `update` | 🚧 In progress |
-| `delete` | 🚧 In progress |
-| Relationship helpers (`.connect()`, `.related()`) | 📋 Planned |
-| Type inference from model definitions | 📋 Planned |
+| Feature                                           | Status         |
+| ------------------------------------------------- | -------------- |
+| `create`                                          | ✅ Done        |
+| `find`                                            | ✅ Done        |
+| `update`                                          | 🚧 In progress |
+| `delete`                                          | 🚧 In progress |
+| Relationship helpers (`.connect()`, `.related()`) | 📋 Planned     |
+| Type inference from model definitions             | 📋 Planned     |
 
 ## Installation
 
@@ -39,12 +39,12 @@ The tooling gap is real: relational databases have Prisma and Mongoose. Graph da
 npm install cypher-orm
 ```
 
-*(not yet published — coming soon)*
+_(not yet published — coming soon)_
 
 ## Quick Start
 
 ```typescript
-import { connect, model } from 'cypher-orm';
+import { connect, model } from "cypher-orm";
 
 connect({
   uri: process.env.DB_URI,
@@ -52,12 +52,12 @@ connect({
   password: process.env.DB_PASSWORD,
 });
 
-const Product = model('Product', {
+const Product = model("Product", {
   name: String,
   price: Number,
 });
 
-const product = await Product.create({ name: 'Smart Hub X', price: 29.99 });
+const product = await Product.create({ name: "Smart Hub X", price: 29.99 });
 ```
 
 ## Goals

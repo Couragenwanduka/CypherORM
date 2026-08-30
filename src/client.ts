@@ -15,18 +15,27 @@ export class Database {
     return this.driver.close();
   }
 
-  async query(cyher: string, params: {}) {
+  async query(cypher: string, params: Record<string, unknown>) {
     const session = this.session();
+
     try {
-      const result = await session.run(cyher, params);
+      const result = await session.run(cypher, params);
+
       return result.records.map((record) => {
-        const node = record.get("node");
-        return node.properties;
-      })
+        const values = record.toObject();
+
+        return Object.fromEntries(
+          Object.entries(values).map(([key, value]) => {
+            if (value && typeof value === "object" && "properties" in value) {
+              return [key, (value as { properties: unknown }).properties];
+            }
+
+            return [key, value];
+          }),
+        );
+      });
     } finally {
       await session.close();
     }
   }
-
-
 }

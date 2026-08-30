@@ -5,4 +5,4 @@ class QueryBuilderError extends Error {
   }
 }
 
-export default QueryBuilderError
+export default QueryBuilderError;

@@ -1,8 +1,9 @@
-import { QueryBuilder } from "./query/createQuery.js";
- const query = new QueryBuilder();
-const result = await query
-  .find("User")
+import { QueryBuilder } from "./query/createQuery.ts";
+
+const result = await new QueryBuilder()
+  .findOne("User", { email: "courage@nexora.com" })
+  .where("name", "=", "Courage")
   .return("node")
   .execute();
 
-console.log(result)
+console.dir(result, { depth: null });
